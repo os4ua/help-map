@@ -1,7 +1,7 @@
 const settings = {
     bing: {
         map: {
-            key: ""
+            key: process.env.NEXT_PUBLIC_BING_MAPS_API_KEY
         }
     }
 };

@@ -1,22 +1,32 @@
 import BingMapsReact from "bingmaps-react"
 import settings from "../../settings"
 
-const viewOptions = {
+export interface ViewOption {
     center: {
-        latitude: 50.4501,
-        longitude: 30.5234,
-    },
-    zoom: 8,
+        latitude: Number,
+        longitude: Number
+    }
+    zoom: Number
 }
 
+export interface MyReactAppProps {
+    pushPins: Microsoft.Maps.Pushpin | Microsoft.Maps.Pushpin[]
+    viewOptions: ViewOption
+}
+
+const apiKey = settings.bing.map.key
+
 const mapReady = m => {
-    console.log("map ready", m);
-    Microsoft.Maps.Events.addHandler(m.map.current, 'viewchange', e => console.log('view changed', e, m.map.current.getBounds()))
+    Microsoft.Maps.Events.addHandler(
+        m.map.current,
+        'viewchange', 
+        e => console.log('view changed', e, m.map.current.getBounds())
+    );
 };
 
-export default function MyReactApp({pushPins}) {
+export default function MyReactApp({pushPins, viewOptions}: MyReactAppProps) {
     return <BingMapsReact 
-        bingMapsKey={settings.bing.map.key} 
+        bingMapsKey={apiKey} 
         pushPins={pushPins}
         viewOptions={viewOptions}
         onMapReady={mapReady}

@@ -20,4 +20,4 @@ Right now I am evaluating DynamoDB as a primary database to keep master data.
 
 For now  the primary candidate for infrastructure is AWS.
 
-Слава Україні
+# :flag_ua: Слава Україні :flag_ua:

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "aws-sdk": "^2.1082.0",
     "bingmaps-react": "^1.2.10",
     "core-js": "^3.21.1",
     "fast-equals": "^3.0.0",

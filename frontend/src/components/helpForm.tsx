@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import {getLocationByAddress} from '../services/location'
-import createNewRequest from '../services/helpRequests'
+import { createNewRequest } from '../services/helpRequests'
 
 export default function HelpForm({onLocationFound}) {
 

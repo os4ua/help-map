@@ -20,7 +20,12 @@ const mapReady = m => {
     Microsoft.Maps.Events.addHandler(
         m.map.current,
         'viewchange', 
-        e => console.log('view changed', e, m.map.current.getBounds())
+        e => { 
+            // This is a good place to query for more data on scroll.
+            // just make sure that it is done efficiently: with a short delay
+            // after scrolling is done
+            console.log('view changed', e, m.map.current.getBounds()) 
+        }
     );
 };
 

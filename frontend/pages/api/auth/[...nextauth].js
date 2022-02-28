@@ -6,12 +6,7 @@ export default NextAuth({
         OktaProvider({
             clientId: process.env.OKTA_CLIENT_ID,
             clientSecret: process.env.OKTA_CLIENT_SECRET,
-            issuer: process.env.OKTA_ISSUER,
-            userinfo: {
-                params: {
-                    scope: "openid groups"
-                }
-            }
+            issuer: process.env.OKTA_ISSUER
         })
     ],
     secret: process.env.AUTH_SECRET

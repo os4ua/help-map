@@ -1,6 +1,6 @@
 import { Coordinates } from "./location";
 
-const createNewRequest = async (typeOfHelp: String, location: Coordinates, address: String) => {
+export async function createNewRequest(typeOfHelp: String, location: Coordinates, address: String) {
     const helpRequest = {
         typeOfHelp,
         lat: location.lat,
@@ -8,7 +8,7 @@ const createNewRequest = async (typeOfHelp: String, location: Coordinates, addre
         address
     }
 
-    await fetch(`/api/help/requests/`, {
+    return await fetch(`/api/help/requests/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -17,4 +17,21 @@ const createNewRequest = async (typeOfHelp: String, location: Coordinates, addre
     })
 };
 
-export default createNewRequest;
+export interface HelpRequest {
+    requestId: String,
+    lat: Number,
+    lng: Number,
+    address: String,
+    typeOfHelp: String
+}
+
+export async function getRequests(): Promise<HelpRequest[]> {
+    const response = await fetch(`/api/help/requests/`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+
+    return await response.json()
+}

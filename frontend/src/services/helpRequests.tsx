@@ -1,11 +1,12 @@
 import { Coordinates } from "./location";
 
-export async function createNewRequest(typeOfHelp: String, location: Coordinates, address: String) {
+export async function createNewRequest(typeOfHelp: String, location: Coordinates, address: String, description: String) {
     const helpRequest = {
         typeOfHelp,
         lat: location.lat,
         lng: location.lng,
-        address
+        address,
+        description
     }
 
     return await fetch(`/api/help/requests/`, {

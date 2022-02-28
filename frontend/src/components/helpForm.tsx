@@ -6,12 +6,13 @@ export default function HelpForm({onLocationFound}) {
 
     const [typeOfHelp, setTypeOfHelp] = useState("")
     const [address, setAddress] = useState("")
+    const [description, setDescription] = useState("")
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const location = await getLocationByAddress(address)
         onLocationFound({title: address, location});
-        createNewRequest(typeOfHelp, location, address)
+        createNewRequest(typeOfHelp, location, address, description)
     };
 
     return <form
@@ -23,6 +24,8 @@ export default function HelpForm({onLocationFound}) {
         <input id="type" type="text" required value={typeOfHelp} onChange={e => setTypeOfHelp(e.target.value)} />
         <label htmlFor="address">Address</label>
         <input id="address" type="text" required value={address} onChange={e => setAddress(e.target.value)} />
+        <label htmlFor="description">Description</label>
+        <textarea id="description" value={description} onChange={e => setDescription(e.target.value)} />
         <button type="submit">Ask for help!</button>
     </form>;
 }

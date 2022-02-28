@@ -1,10 +1,22 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import HelpForm from '../src/components/helpForm'
-import MyBingMap from '../src/components/map'
+import MyMap from '../src/components/map'
+import BingMapsReact from "bingmaps-react"
 import React, { useEffect, useState } from 'react';
 import { getRequests } from '../src/services/helpRequests'
-import { title } from 'process';
+
+function requestToPushPin(r) {
+  return {
+    center: {
+      latitude: r.lat,
+      longitude: r.lng
+    },
+    options: {
+      title: `${r.address} | ${r.typeOfHelp}`
+    }
+  }
+}
 
 export default function Home() {
 
@@ -19,8 +31,14 @@ export default function Home() {
   const [pushPins, setPushPins] = useState([])
   const [viewOption, setViewOption] = useState(kiyvViewOptions)
 
+  const refreshPins = async () => {
+    const requests = await getRequests()
+    const pins = requests.map(r => requestToPushPin(r))
+    setPushPins(pins)
+  }
+
   const onLocationFound = async l => {
-    await updateData()
+    await refreshPins()
 
     setViewOption({
       ...viewOption,
@@ -31,27 +49,6 @@ export default function Home() {
     })
   }
 
-  const updateData = async () => {
-    const requests = await getRequests()
-    const pins = requests.map(r => {
-      return {
-        center: {
-          latitude: r.lat,
-          longitude: r.lng
-        },
-        options: {
-          title: `${r.address} | ${r.typeOfHelp}`
-        }
-      }
-    })
-    console.log('received pins', pins)
-    setPushPins(pins)
-  }
-
-  useEffect(() => {
-    updateData()
-  }, [])
-
   return (
     <div>
       <Head>
@@ -61,8 +58,13 @@ export default function Home() {
       </Head>
 
       <div style={{ display: "flex", position: "relative", width: "100%", height: "100vh" }}>
-        <MyBingMap pushPins={pushPins} viewOptions={viewOption}></MyBingMap>
-        <HelpForm onLocationFound={onLocationFound}></HelpForm>
+        <MyMap
+          pushPins={pushPins}
+          viewOptions={viewOption}></MyMap>
+        <div>
+          <button onClick={refreshPins}>Get my pins!</button>
+          <HelpForm onLocationFound={onLocationFound}></HelpForm>
+        </div>
       </div>
     </div>
   )
